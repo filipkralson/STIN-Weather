@@ -1,3 +1,6 @@
+[![Testingos](https://github.com/filipkralson/STIN-Weather/actions/workflows/tests.yml/badge.svg)](https://github.com/filipkralson/STIN-Weather/actions/workflows/tests.yml)
+
+
 # STIN-Weather
 
 Je třeba vytvořit program pro zobrazení aktuálního počasí a také jeho předpověď.
