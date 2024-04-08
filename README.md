@@ -1,3 +1,5 @@
+[![codecov](https://codecov.io/github/filipkralson/STIN-Weather/graph/badge.svg?token=VT09BpeJY3)](https://codecov.io/github/filipkralson/STIN-Weather)
+
 # Systém pro předpověď počasí
 
 ---
