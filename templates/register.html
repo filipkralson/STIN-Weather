@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather - register</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body class="bg-light">
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h1 class="text-center mb-4">Register</h1>
+                        <form method="POST">
+                            {{ form.hidden_tag() }}
+
+                            <div class="form-group">
+                                {{ form.user.label }}
+                                {{ form.user(class="form-control") }}
+                            </div>
+
+                            <div>
+                                {{ form.card.label }}
+                                {{ form.card(class="form-control") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.password.label }}
+                                {{ form.password(class="form-control") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.confirm_password.label }}
+                                {{ form.confirm_password(class="form-control") }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ form.submit(class="btn btn-primary btn-block") }}
+                            </div>
+                            <p class="text-center">Do you have an account? <a href="{{ url_for('user.signIn') }}">Sign In</a></p>
+                            {% if form.errors %}
+                                <div class="alert alert-danger" role="alert">
+                                    {% for error in form.confirm_password.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+
+                            {% if error %}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ error }}
+                                </div>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
