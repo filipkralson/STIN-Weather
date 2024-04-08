@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Gateway</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5 mb-3">Payment Gateway</h1>
+        <div class="alert alert-info" role="alert">
+            Please proceed with the payment to become a subscriber.
+        </div>
+        <div class="container">
+        <form method="POST">
+            <div class="form-group">
+                <form method="POST">
+                    {{ form.hidden_tag() }}
+                {{ form.submit(class="btn btn-primary", id="pay-btn") }}
+                </form>
+            </div>
+        </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Information</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/e8d3bc3940.js" crossorigin="anonymous"></script>
+    <style>
+      body {
+          background-image: url('https://images.unsplash.com/photo-1601134467661-3d775b999c8b');
+          background-size: cover;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+      }
+  </style>
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+          {% if user %}
+          <a class="navbar-brand" href="{{ url_for('user.exit') }}">Logout</a>
+            {% if not user.getSubscribed()%}
+              <a class="navbar-brand" href="{{ url_for('payment.payment') }}">Pay NOW!</a>
+            {% endif %}
+          {% else %}
+            <a class="navbar-brand" href="{{ url_for('user.signIn') }}">Login</a>
+            <a class="navbar-brand" href="{{ url_for('user.signUp') }}">Register</a>
+          {% endif %}
+        </div>
+    </nav>
+    <section class="vh-100">
+        <div class="container py-5 h-100">
+          <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-md-8 col-lg-10 col-xl-10">
+              <div class="card mb-5" style="color: #4B515D; border-radius: 35px;">
+                <div class="card-body p-4">
+                  <h3 class="text-center mb-4">Weather Information</h3>
+                    <form action="{{ url_for('main.weather') }}" method="POST">
+                        {{ form.csrf_token }}
+                        <div class="mb-3">
+                            {{ form.city.label(class="form-label") }}
+                            {{ form.city(class="form-control") }}
+                        </div>
+                        <div class="text-center">
+                            {{ form.get_weather(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                  <div class="d-flex justify-content-center align-items-center">
+                      {% if user %}
+                        {% for location in favorite_locations %}
+                          <a href="{{ url_for('main.weather', location=location) }}" class="btn btn-warning mt-5 mx-2">{{ location }}</a>                 
+                        {% endfor %}
+                      {% endif %}
+                  </div>
+                {% if current_weather_from_ip %}
+                  <div class="col-lg-6 mx-auto mt-5">
+                    <h4 class="mt-4">Current location weather</h4>
+                    <div class="d-flex">
+                      <h6 class="flex-grow-1">{{ current_weather_from_ip.location.name }}</h6>
+                      <h6>{{ current_weather_from_ip.location.localtime }}</h6>
+                    </div>
+
+                    <div class="d-flex flex-column text-center mt-3 mb-2">
+                      <h6 class="display-6 mb-0 font-weight-bold" style="color: #1C2331;">{{ current_weather_from_ip.current.temp_c }}°C</h6>
+                      <span class="small" style="color: #868B94">{{ current_weather_from_ip.current.condition.text }}</span>
+                    </div>
+
+                    <div class="d-flex align-items-center">
+                      <div class="flex-grow-1" style="font-size: 1rem;">
+                        <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ current_weather_from_ip.current.wind_kph }} km/h
+                          </span></div>
+                        <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ current_weather_from_ip.current.humidity }}% </span>
+                        </div>
+                        <div><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ current_weather_from_ip.current.uv }} UV</span>
+                        </div>
+                      </div>
+                      <div>
+                        <img src="{{ 'http:' + current_weather_from_ip.current.condition.icon }}" alt="{{ current_weather_from_ip.current.condition.text }}" width="100px">
+                      </div>
+                    </div>
+                  </div>
+                  {% endif %}
+                  {% if current_weather %}
+                        <div class="col-lg-6 mx-auto mt-5">
+                          <h4 class="mt-4">Current Weather</h4>
+                          <div class="d-flex">
+                            <h6 class="flex-grow-1">{{ current_weather.location.name }}</h6>
+                            <h6>{{ current_weather.location.localtime }}</h6>
+                          </div>
+                          <div class="d-flex flex-column text-center mt-3 mb-2">
+                            <h6 class="display-6 mb-0 font-weight-bold" style="color: #1C2331;">{{ current_weather.current.temp_c }}°C</h6>
+                            <span class="small" style="color: #868B94">{{ current_weather.current.condition.text }}</span>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <div class="flex-grow-1" style="font-size: 1rem;">
+                              <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ current_weather.current.wind_kph }} km/h
+                                </span></div>
+                              <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ current_weather.current.humidity }}% </span>
+                              </div>
+                              <div><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ current_weather.current.uv }} UV</span>
+                              </div>
+                            </div>
+                            <div>
+                              <img src="{{ 'http:' + current_weather.current.condition.icon }}" alt="{{ current_weather.current.condition.text }}" width="100px">
+                            </div>
+                          </div>
+                          <div class="d-flex justify-content-center mt-5">
+                            {% if user and user.getSubscribed() and current_weather.location.name not in favorite_locations%}
+                              <a href="{{ url_for('main.add_to_favourite', location=current_weather.location.name) }}" class="btn btn-success">Add to favourite</a>
+                            {% endif %}
+                          </div>
+                      </div>
+                  {% endif %}
+
+                  {% if forecast %}
+                  <h4 class="mt-4">Weather Forecast</h4>
+                  <div class="row d-flex justify-content-center">
+                    {% for day in forecast.forecast.forecastday %}
+                    <div class="col-md-6 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="d-flex">
+                            <h6 class="flex-grow-1">{{ day.date }}</h6>
+                          </div>
+                          <div class="d-flex flex-column text-center mt-3 mb-2">
+                            <h6 class="display-6 mb-0 font-weight-bold" style="color: #1C2331;">{{ day.day.avgtemp_c }}°C</h6>
+                            <span class="small" style="color: #868B94">{{ day.day.condition.text }}</span>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <div class="flex-grow-1" style="font-size: 1rem;">
+                              <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ day.day.maxwind_kph }} km/h
+                                </span></div>
+                              <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ day.day.avghumidity }}% </span>
+                              </div>
+                              <div><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ day.day.uv }} UV</span>
+                              </div>
+                            </div>
+                            <div>
+                              <img src="{{ 'http:' + day.day.condition.icon }}" alt="{{ day.day.condition.text }}" width="50px">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+
+                  {% if history %}
+                  <h4 class="mt-4">Weather History</h4>
+                  <div class="row d-flex justify-content-center">
+                    {% for day in history %}
+                    <div class="col-md-6 mb-4">
+                      <div class="card">
+                        <div class="card-body">
+                          <div class="d-flex">
+                            <h6 class="flex-grow-1">{{ day.time }}</h6>
+                          </div>
+                          <div class="d-flex flex-column text-center mt-3 mb-2">
+                            <h6 class="display-6 mb-0 font-weight-bold" style="color: #1C2331;">{{ day.temp_c }}°C</h6>
+                            <span class="small" style="color: #868B94">{{ day.condition.text }}</span>
+                          </div>
+                          <div class="d-flex align-items-center">
+                            <div class="flex-grow-1" style="font-size: 1rem;">
+                              <div><i class="fas fa-wind fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ day.wind_kph }} km/h
+                                </span></div>
+                              <div><i class="fas fa-tint fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ day.humidity }}% </span>
+                              </div>
+                              <div><i class="fas fa-sun fa-fw" style="color: #868B94;"></i> <span class="ms-1">{{ day.uv }} UV</span>
+                              </div>
+                            </div>
+                            <div>
+                              <img src="{{ 'http:' + day.condition.icon }}" alt="{{ day.condition.text }}" width="50px">
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</body>
+</html>
