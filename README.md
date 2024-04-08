@@ -1,4 +1,5 @@
 [![Testingos](https://github.com/filipkralson/STIN-Weather/actions/workflows/tests.yml/badge.svg)](https://github.com/filipkralson/STIN-Weather/actions/workflows/tests.yml)
+[![codecov](https://codecov.io/github/filipkralson/STIN-Weather/graph/badge.svg?token=VT09BpeJY3)](https://codecov.io/github/filipkralson/STIN-Weather)
 
 
 # STIN-Weather
