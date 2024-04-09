@@ -1,3 +1,4 @@
+[![Testingos](https://github.com/filipkralson/STIN-Weather/actions/workflows/test.yml/badge.svg)](https://github.com/filipkralson/STIN-Weather/actions/workflows/test.yml)
 [![codecov](https://codecov.io/github/filipkralson/STIN-Weather/graph/badge.svg?token=VT09BpeJY3)](https://codecov.io/github/filipkralson/STIN-Weather)
 
 # Systém pro předpověď počasí
