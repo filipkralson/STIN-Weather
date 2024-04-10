@@ -3,9 +3,10 @@ from flask_wtf import FlaskForm
 from jinja2 import UndefinedError
 from wtforms import StringField, SubmitField
 from wtforms.validators import InputRequired
-from object.locations import db as towns_db, Location
-from utils.cookies import get_current_user
-from utils.weather import get_current_weather_by_ip, get_current_weather, get_weather_forecast, get_weather_history
+from project.object.locations import db as towns_db, Location
+from project.utils.cookies import get_current_user
+from project.utils.database import db
+from project.utils.weather import get_current_weather_by_ip, get_current_weather, get_weather_forecast, get_weather_history
 
 main = Blueprint('main', __name__)
 
@@ -106,9 +107,14 @@ def add_to_favourite():
     user = get_current_user()
     if not user:
         return redirect(url_for('user.signIn'))
-    if Location(location, user):
+
+    try:
+        location_new = Location(location, user)
+        db.session.add(location_new)
+        db.session.commit()
         return redirect(url_for('main.weather', location=location))
-    else:
+    except Exception as e:
+        db.session.rollback()
         error_message = "Unable to add to favourite."
         return render_template('index.html', error=error_message, form=form, user=user)
 

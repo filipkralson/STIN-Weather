@@ -1,6 +1,6 @@
 import pytest
 from pytest_mock import MockerFixture
-from utils.weather import (
+from project.utils.weather import (
     get_current_weather,
     get_current_weather_by_ip,
     get_weather_forecast,
@@ -30,14 +30,14 @@ def mock_requests_get_success(mocker: MockerFixture):
     mock_response = mocker.Mock()
     mock_response.status_code = 200
     mock_response.json.return_value = {"city": "Prague"}
-    return mocker.patch('utils.weather.requests.get', return_value=mock_response)
+    return mocker.patch('project.utils.weather.requests.get', return_value=mock_response)
 
 
 @pytest.fixture
 def mock_requests_get_failure(mocker: MockerFixture):
     mock_response = mocker.Mock()
     mock_response.status_code = 404
-    return mocker.patch('utils.weather.requests.get', return_value=mock_response)
+    return mocker.patch('project.utils.weather.requests.get', return_value=mock_response)
 
 
 def test_get_current_weather_by_ip_success(mock_requests_get_success):
