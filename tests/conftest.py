@@ -26,41 +26,31 @@ def new_location():
 
 @pytest.fixture(scope='module')
 def test_client():
-    # Vytvoření testovací databáze
     app = create_app('test')
 
-    # Vytvoření testovacího klienta pomocí Flask aplikace konfigurované pro testování
     with app.test_client() as testing_client:
-        # Establish an application context
         with app.app_context():
-            yield testing_client  # zde probíhá testování
+            yield testing_client
 
 
 @pytest.fixture(scope='module')
 def init_database(test_client):
-    # Create the database and the database table
     db.create_all()
 
-    # Insert user data
-    default_user = User("testUser", "password")
-    second_user = User("testUser1", "password1")
+    default_user = User("testUser", "password", card_number="123456789123456")
+    second_user = User("testUser1", "password1", card_number="123456789123456")
     db.session.add(default_user)
     db.session.add(second_user)
-
-    # Commit the changes for the users
     db.session.commit()
 
-    # Insert book data
     location1 = Location("Praha", default_user)
     location2 = Location("Brno", default_user)
     location3 = Location("Liberec", second_user)
+
     db.session.add(location1)
     db.session.add(location2)
     db.session.add(location3)
-
-    # Commit the changes for the books
     db.session.commit()
-
-    yield  # this is where the testing happens!
+    yield
 
     db.drop_all()

@@ -6,7 +6,8 @@ from wtforms.validators import InputRequired
 from project.object.locations import db as towns_db, Location
 from project.utils.cookies import get_current_user
 from project.utils.database import db
-from project.utils.weather import get_current_weather_by_ip, get_current_weather, get_weather_forecast, get_weather_history
+from project.utils.weather import (get_current_weather_by_ip, get_current_weather, get_weather_forecast,
+                                   get_weather_history)
 
 main = Blueprint('main', __name__)
 
@@ -121,6 +122,10 @@ def add_to_favourite():
 
 def get_favorites():
     user = get_current_user()
-    favorite_locations = Location.query.filter_by(user_id=user.id).all()
-    favorite_location_names = [location.location for location in favorite_locations]
-    return favorite_location_names
+    if user:
+        favorite_locations = Location.query.filter_by(user_id=user.id).all()
+        favorite_location_names = [location.location for location in favorite_locations]
+        return favorite_location_names
+    else:
+        return []
+
