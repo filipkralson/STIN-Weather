@@ -1,6 +1,6 @@
 from werkzeug.security import generate_password_hash, check_password_hash
-from object.locations import Location
-from utils.database import db
+from project.object.locations import Location
+from project.utils.database import db
 
 
 class User(db.Model):

@@ -2,8 +2,8 @@ from flask import Blueprint, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import InputRequired, EqualTo
-from object.users import db as users_db, User, getUser
-from utils.cookies import createCookie, readCookie, deleteCookie
+from project.object.users import db as users_db, User, getUser
+from project.utils.cookies import createCookie, readCookie, deleteCookie
 
 user = Blueprint('user', __name__)
 

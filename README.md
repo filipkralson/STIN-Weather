@@ -73,11 +73,11 @@ databáze aktivní a může s ní nadále pracovat
 
 ---
 ## UseCase diagram
-![Usecase diagram](images/usecase.png)
+![Usecase diagram](project/images/usecase.png)
 ---
 ## Návrh databáze
 
-![Návrh databáze v MSSQL](images/db.png)
+![Návrh databáze v MSSQL](project/images/db.png)
 
 ### Popis databáze
 

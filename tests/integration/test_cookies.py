@@ -1,43 +1,27 @@
-import pytest
-from flask import Flask
-from utils.database import db
-from utils.cookies import readCookie, createCookie, deleteCookie, get_current_user
+from flask import Response
+from project.utils.cookies import createCookie, deleteCookie
 
 
-@pytest.fixture
-def app():
-    app = Flask(__name__)
-    app.config['TESTING'] = True
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///:memory:'
-    return app
+def test_create_secure_cookie(app):
+    with app.test_request_context():
+        username = "test_user"
+        response = createCookie(username)
+
+        assert isinstance(response, Response)
+        assert 'user_info' in response.headers['Set-Cookie']
+        assert 'HttpOnly' in response.headers['Set-Cookie']
+        assert 'SameSite=Strict' in response.headers['Set-Cookie']
+        assert 'Secure' not in response.headers['Set-Cookie']
+        assert response.status_code == 302
+        assert response.location == "/"
 
 
-@pytest.fixture
-def client(app):
-    return app.test_client()
+def test_delete_secure_cookie_with_valid_data(app):
+    with app.test_request_context():
+        response = deleteCookie()
 
-
-@pytest.fixture
-def init_db(app):
-    db.init_app(app)
-    with app.app_context():
-        db.create_all()
-        yield db
-        db.session.remove()
-        db.drop_all()
-
-
-def test_readCookie(client):
-    pass
-
-
-def test_createCookie(client):
-    pass
-
-
-def test_deleteCookie(client):
-    pass
-
-
-def test_get_current_user_with_mock(app, monkeypatch, init_db):
-    pass
+        assert response is not None
+        assert "Set-Cookie" in response.headers
+        assert "user_info=; Expires=Thu, 01 Jan 1970 00:00:00 GMT" in response.headers["Set-Cookie"]
+        assert response.status_code == 302
+        assert response.location == "/"

@@ -2,7 +2,7 @@ from dotenv import load_dotenv
 import os
 from itsdangerous import URLSafeSerializer
 from flask import make_response, redirect, url_for, request
-from object.users import getUser
+from project.object.users import getUser
 
 load_dotenv(dotenv_path=".env")
 KEY = os.getenv("KEY")

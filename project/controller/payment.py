@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from flask_wtf import FlaskForm
 from wtforms.fields.simple import SubmitField
-from utils.cookies import readCookie
-from object.users import User
+from project.utils.cookies import readCookie
+from project.object.users import User
 
 payment_bp = Blueprint('payment', __name__)
 
