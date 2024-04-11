@@ -7,7 +7,7 @@ from project.utils.database import db
 
 @pytest.fixture
 def app():
-    app = create_app('test')
+    app = create_app(option='test')
     return app
 
 

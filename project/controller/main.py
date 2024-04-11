@@ -48,14 +48,18 @@ def post():
 def get():
     form = WeatherForm()
     current_weather_from_ip = get_current_weather_by_ip()
+    current_weather_fail = get_current_weather("Liberec")
     user = get_current_user()
-    if user:
-        favorites = get_favorites()
-        return render_template('index.html', user=user, current_weather_from_ip=current_weather_from_ip, form=form,
+    favorites = get_favorites()
+    try:
+        if user:
+            return render_template('index.html', user=user, current_weather_from_ip=current_weather_from_ip, form=form,
+                                   favorite_locations=favorites)
+        else:
+            return render_template('index.html', user=user, current_weather_from_ip=current_weather_from_ip, form=form)
+    except Exception as e:
+        return render_template('index.html', user=user, current_weather_from_ip=current_weather_fail, form=form,
                                favorite_locations=favorites)
-    else:
-        return render_template('index.html', user=user, current_weather_from_ip=current_weather_from_ip, form=form)
-
 
 @main.route('/weather', methods=['GET', 'POST'])
 def weather():

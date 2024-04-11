@@ -1,0 +1,12 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+    environment:
+      - KEY=${secrets.KEY}
+      - DB_LOGIN=${secrets.DB_LOGIN}
+      - API_KEY=${secrets.API_KEY}
+    ports:
+      - "8000:8000"
