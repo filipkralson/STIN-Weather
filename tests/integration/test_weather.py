@@ -29,7 +29,7 @@ def test_get_current_weather(mock_requests_get):
 def mock_requests_get_success(mocker: MockerFixture):
     mock_response = mocker.Mock()
     mock_response.status_code = 200
-    mock_response.json.return_value = {"city": "Prague"}
+    mock_response.json.return_value = {"city": "Liberec"}
     return mocker.patch('project.utils.weather.requests.get', return_value=mock_response)
 
 
@@ -70,6 +70,6 @@ def test_get_weather_history(mock_requests_get):
         }
     }
     mock_requests_get.return_value.json.return_value = mock_response
-    city_name = "Prague"
+    city_name = "Liberec"
     data = get_weather_history(city_name)
     assert len(data) == 2

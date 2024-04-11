@@ -20,9 +20,8 @@ def get_current_weather(city_name):
 def get_current_weather_by_ip():
     try:
         ip_address = request.remote_addr
-        if ip_address == '127.0.0.1':
-            city_name = "Prague"
-            return get_current_weather(city_name)
+        if ip_address == '127.0.0.1' or ip_address == '0.0.0.0':
+            return get_current_weather("Liberec")
         else:
             response = requests.get(f"https://ipinfo.io/{ip_address}/json")
             if response.status_code == 200:
@@ -30,7 +29,7 @@ def get_current_weather_by_ip():
                 city_name = data.get("city")
                 return get_current_weather(city_name)
             else:
-                return None
+                return get_current_weather("Liberec")
     except Exception as e:
         print("Error:", e)
         return None

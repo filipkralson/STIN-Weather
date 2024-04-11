@@ -7,7 +7,7 @@ from project.utils.database import db
 import os
 
 
-def create_app(option):
+def create_app(option=None):
     app = Flask(__name__, template_folder='project/templates')
     load_dotenv(dotenv_path=".env")
 
@@ -35,4 +35,4 @@ def create_app(option):
 
 
 if __name__ == '__main__':
-    create_app("").run(debug=True)
+    create_app(option=",").run(debug=True)
