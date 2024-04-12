@@ -7,20 +7,11 @@ from project.utils.database import db
 import os
 
 
-def create_app(option=None):
+def create_app():
     app = Flask(__name__, template_folder='project/templates')
-    load_dotenv(dotenv_path=".env")
 
-    if option == "test":
-        app.config['TESTING'] = True
-        app.config['WTF_CSRF_ENABLED'] = False
-        constring = 'sqlite:///:memory:'
-    else:
-        constring = os.getenv("DB_LOGIN")
-
-    app.config["SECRET_KEY"] = os.getenv("KEY")
-    app.config["SQLALCHEMY_DATABASE_URI"] = constring
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    config_type = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
+    app.config.from_object(config_type)
 
     db.init_app(app)
 
@@ -35,4 +26,4 @@ def create_app(option=None):
 
 
 if __name__ == '__main__':
-    create_app(option=",").run(debug=True)
+    create_app().run()

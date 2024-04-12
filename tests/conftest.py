@@ -3,11 +3,13 @@ from project.object.users import User
 from project.object.locations import Location
 from app import create_app
 from project.utils.database import db
+import os
 
 
 @pytest.fixture
 def app():
-    app = create_app(option='test')
+    os.environ['CONFIG_TYPE'] = 'config.TestingConfig'
+    app = create_app()
     return app
 
 
@@ -26,7 +28,8 @@ def new_location():
 
 @pytest.fixture(scope='module')
 def test_client():
-    app = create_app('test')
+    os.environ['CONFIG_TYPE'] = 'config.TestingConfig'
+    app = create_app()
 
     with app.test_client() as testing_client:
         with app.app_context():
