@@ -1,5 +1,7 @@
-[![Testingos](https://github.com/filipkralson/STIN-Weather/actions/workflows/test.yml/badge.svg)](https://github.com/filipkralson/STIN-Weather/actions/workflows/test.yml)
+[![Testing](https://github.com/filipkralson/STIN-Weather/actions/workflows/test.yml/badge.svg)](https://github.com/filipkralson/STIN-Weather/actions/workflows/test.yml)
 [![codecov](https://codecov.io/github/filipkralson/STIN-Weather/graph/badge.svg?token=VT09BpeJY3)](https://codecov.io/github/filipkralson/STIN-Weather)
+[![Static Badge](https://img.shields.io/badge/webov%C3%A1%20str%C3%A1nka-E3F988)](https://stin-weather.adaptable.app)
+
 
 # Systém pro předpověď počasí
 
