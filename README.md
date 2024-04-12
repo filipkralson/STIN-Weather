@@ -25,7 +25,7 @@ Samotná data počasí budou dostupná z veřejně dostupného API, které v rů
 - Programovací jazyk: Python 3.12
 - Nadstavba: Flask
 - internetové připojení
-- Databáze: MySQL, Docker
+- Databáze: MySQL
 
 ---
 ## Graficky uživatelské rozhraní - GUI
