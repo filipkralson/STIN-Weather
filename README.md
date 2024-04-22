@@ -28,6 +28,7 @@ Samotná data počasí budou dostupná z veřejně dostupného API, které v rů
 - Nadstavba: Flask
 - internetové připojení
 - Databáze: MySQL
+- API - https://www.weatherapi.com
 
 ---
 ## Graficky uživatelské rozhraní - GUI
